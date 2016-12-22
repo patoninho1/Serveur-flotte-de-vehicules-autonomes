@@ -7,18 +7,7 @@ var username = "bob";
 var password = "mdpbob";
 var isloged = false;
 //localhost:8080/login?user=bob&pass=mdpbob
- 
- 
-distance.get(
-  {
-    origin: 'San Francisco, CA',
-    destination: 'San Diego, CA'
-  },
-  function(err, data) {
-    if (err) return console.log(err);
-    console.log(data);
-});
-
+//localhost:8080/travel_to?user=bob&pass=mdpbob
 
 function login(params){
 	if ('user' in params && 'pass' in params) {
@@ -31,13 +20,26 @@ function login(params){
 	return "Wrong username or password";
 }
 
+
+function travel_to(params){
+	if ('user' in params && 'pass' in params) {
+		distance.get(
+		  {
+			origin: 'San Francisco, CA',
+			destination: 'San Diego, CA'
+		  },
+		  function(err, data) {
+			if (err) return console.log(err);
+			console.log(data);
+		});
+	}
+}
+
 var server = http.createServer(function(req, res) {
 	
 	var params = querystring.parse(url.parse(req.url).query);
 	var page = url.parse(req.url).pathname;
-	console.log(page);
-		
-	
+	console.log(page);	
 	
 	switch(page){		
 		case "/login":
@@ -58,10 +60,7 @@ var server = http.createServer(function(req, res) {
 	}else{
 		
 	}
-	
-	
-
-	
+		
 	res.writeHead(200, {"Content-Type": "application/json"});  
 	
 	var otherArray = ["item1", "item2"];
@@ -97,6 +96,7 @@ var server = http.createServer(function(req, res) {
 	  console.log("Client disconnected");
 	});
   */
+  
 });
 
 server.listen(8080);
