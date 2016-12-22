@@ -1,0 +1,43 @@
+{
+  "name": "Serveur-flotte-de-vehisules-autonomes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serveur.js",
+  "dependencies": {
+    "google-distance": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes/issues"
+  },
+  "homepage": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes#readme",
+  
+  "xo": {
+	 " esnext ": true ,
+	 " envs ": [
+		 " node "
+	 ],
+	 " space ": 2,
+	 " rules ": {
+		 "max -len": [
+			 " error ",
+			 80,
+			 2
+		 ]
+	 },
+	 " ignores ": [
+		"Gruntflie .js"
+	 ]
+  }
+
+}
