@@ -4,21 +4,18 @@
 var method = login.prototype;
 
 function login(username,pass) {
-	username = "bob";
-	pass = "mdpbob";
-	isConnected = false;
+	this.username = username;
+	this.pass = pass;
+	this.isConnected = false;
 }
 
 method.auth = function(params) {
-	
+	isConnected = false;
 	if ('user' in params && 'pass' in params) {
-		if(params['user'] == username && params['pass'] == password){
-			isConnected = true;
-			return "Login succes";
+		if(params['user'] == this.username && params['pass'] == this.pass){
+			isConnected = true;			
 		}
-	}
-	isConnected = false;	
-	
+	}			
     return isConnected;
 };
 

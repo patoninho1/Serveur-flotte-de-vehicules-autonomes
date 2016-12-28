@@ -16,20 +16,6 @@ var account = require("./login.js");
 var bob = new account("bob","mdpbob");
 
 
-
-
-function login(params){
-	if ('user' in params && 'pass' in params) {
-		if(params['user'] == username && params['pass'] == password){
-			isloged = true;
-			return "Login succes";
-		}
-	}
-	isloged = false;
-	return "Wrong username or password";
-}
-
-
 function travel_to(params){
 	if ('user' in params && 'pass' in params) {
 		distance.get(
@@ -48,22 +34,26 @@ var server = http.createServer(function(req, res) {
 	
 	var params = querystring.parse(url.parse(req.url).query);
 	var page = url.parse(req.url).pathname;
-	console.log(page);	
+	var ip = req.connection.remoteAddress;
 	
-	if (!bob.isConnected){
+	console.log(ip);	
+	console.log(ip + " ask for page :" + page);	
 	
-	}else{
+	if (!bob.isConnected() && page != "/login"){
+		res.writeHead(200, {"Content-Type": "text/plain"}); 	
+		res.end("Auth fail");
+	}else{	
+	
+		switch(page){		
+			case "/login":
+				res.writeHead(200, {"Content-Type": "text/plain"}); 	
+				res.end(bob.auth(params));
+			break;
+			case "/travel_to":
+				//TODO
+			break;
+		}
 		
-	}
-	
-	switch(page){		
-		case "/login":
-			res.writeHead(200, {"Content-Type": "text/plain"}); 	
-			res.end(login(params));
-		break;
-		case "/travel_to":
-			//TODO
-		break;
 	}
 	
 	

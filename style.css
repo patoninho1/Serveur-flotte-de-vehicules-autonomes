@@ -1,0 +1,60 @@
+html,body{
+	width				: 100%;
+	height				: 100%;
+	background-color	: white;
+	font-family			: Verdana, "Courier New", "Lucida Console";
+	font-size			: 14px;
+	font-weight			: normal;
+	padding				: 0px;
+	margin				: 0px;
+	overflow			: hidden;
+	color				: #BDBDBD;
+}
+
+#login{
+	width				: 300px;	
+	position			: absolute;
+	left				: 50%;
+	top					: 50%;
+	margin-left			: -150px;
+	margin-top			: -200px;
+	border				: 1px solid black;
+}
+
+h2{
+	font-size			: 20px;
+}
+
+label{
+	color				: #464646;
+	text-shadow			: 0 1px 0 #fff;
+	font-size			: 14px;
+	font-weight			: bold;
+}
+
+input[type=text],input[type=password]{
+	width				: 80%;
+	height				: 30px;	
+	margin-bottom		: 10px;
+	margin-top			: 5px;	
+	border				: 2px solid #ccc;
+	color				: #4f4f4f;
+	font-size			: 16px;	
+}
+
+input[type=button]{
+	font-size			: 16px;
+	border				: 1px solid grey;
+	color				: #4E4D4B;
+	font-weight			: bold;
+	cursor				: pointer;
+	width				: 80%;
+	margin-bottom		: 15px;
+	margin-top			: 5px;
+	padding				: 5px;
+}
+
+input[type=button]:hover{
+	background			: grey;
+}
+
