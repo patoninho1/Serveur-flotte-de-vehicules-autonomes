@@ -32,29 +32,50 @@ function travel_to(params){
 
 var server = http.createServer(function(req, res) {
 	
+	//Get and parse argument and client IP
 	var params = querystring.parse(url.parse(req.url).query);
 	var page = url.parse(req.url).pathname;
 	var ip = req.connection.remoteAddress;
-	
-	console.log(ip);	
+		
 	console.log(ip + " ask for page :" + page);	
 	
-	if (!bob.isConnected() && page != "/login"){
+	//Accept request from localhost
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype');
+	res.setHeader('Access-Control-Allow-Credentials', true);
+	  
+	//Specifie that the server answer is a JSON
+	res.writeHead(200, {"Content-Type": "application/json"});  
+		  
+	/*if (!bob.isConnected() && page != "/login"){
 		res.writeHead(200, {"Content-Type": "text/plain"}); 	
 		res.end("Auth fail");
-	}else{	
+	}else{	*/
+	
+	var json;
 	
 		switch(page){		
 			case "/login":
-				res.writeHead(200, {"Content-Type": "text/plain"}); 	
-				res.end(bob.auth(params));
+				var data = { auth: bob.auth(params,ip)};   
+				json = JSON.stringify(data);  
 			break;
+			case "/getData":
+				var floteArray = {};
+				var data = { nbVehicule: 20, flote : floteArray, };   
+				json = JSON.stringify(data);  
 			case "/travel_to":
+				
 				//TODO
 			break;
 		}
 		
-	}
+		
+		
+		res.end(json);
+		
+		
+	//}
 	
 	
 	

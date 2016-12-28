@@ -11,6 +11,9 @@ html,body{
 	color				: #BDBDBD;
 }
 
+
+
+/* Login form */
 #login{
 	width				: 300px;	
 	position			: absolute;
@@ -56,5 +59,12 @@ input[type=button]{
 
 input[type=button]:hover{
 	background			: grey;
+}
+
+
+
+/* Controle panel*/
+#main {
+	display: none;	
 }
 

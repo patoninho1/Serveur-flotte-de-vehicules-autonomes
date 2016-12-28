@@ -6,25 +6,30 @@ var method = login.prototype;
 function login(username,pass) {
 	this.username = username;
 	this.pass = pass;
+	this.ip = "";
 	this.isConnected = false;
 }
 
-method.auth = function(params) {
-	isConnected = false;
+method.auth = function(params,ip) {
+	this.isConnected = false;
 	if ('user' in params && 'pass' in params) {
 		if(params['user'] == this.username && params['pass'] == this.pass){
-			isConnected = true;			
+			this.isConnected = true;	
+			this.ip = ip;
 		}
 	}			
-    return isConnected;
+    return this.isConnected;
 };
 
 method.disconnected = function() {
-	isConnected = false;	
+	this.isConnected = false;	
 };
 
-method.isConnected = function() {
-    return isConnected;
+method.isConnected = function(ip) {
+	if(ip != this.ip){
+		this.isConnected = false;
+	}
+    return this.isConnected;
 };
 
 module.exports = login;
