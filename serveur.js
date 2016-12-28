@@ -3,11 +3,20 @@ var url = require('url');
 var querystring = require('querystring');
 var distance = require('google-distance');
 
-var username = "bob";
-var password = "mdpbob";
-var isloged = false;
+
 //localhost:8080/login?user=bob&pass=mdpbob
 //localhost:8080/travel_to?user=bob&pass=mdpbob
+
+var vehicule = require("./vehicule.js");
+var vA = new vehicule();
+
+
+
+var account = require("./login.js");
+var bob = new account("bob","mdpbob");
+
+
+
 
 function login(params){
 	if ('user' in params && 'pass' in params) {
@@ -41,6 +50,12 @@ var server = http.createServer(function(req, res) {
 	var page = url.parse(req.url).pathname;
 	console.log(page);	
 	
+	if (!bob.isConnected){
+	
+	}else{
+		
+	}
+	
 	switch(page){		
 		case "/login":
 			res.writeHead(200, {"Content-Type": "text/plain"}); 	
@@ -50,6 +65,8 @@ var server = http.createServer(function(req, res) {
 			//TODO
 		break;
 	}
+	
+	
 	
 	
 	/*
