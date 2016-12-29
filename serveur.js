@@ -60,9 +60,15 @@ var server = http.createServer(function(req, res) {
 				var data = { auth: bob.auth(params,ip)};   
 				json = JSON.stringify(data);  
 			break;
-			case "/getData":
-				var floteArray = {};
-				var data = { nbVehicule: 20, flote : floteArray, };   
+			case "/getVehiculeData":
+				var floteArray = [
+					{id: 0, loc: {lat: 46.8516177, lng: 1.2393998} },
+					{id: 1, loc: {lat: 46.8516177, lng: 1.2393998} },
+					{id: 2, loc: {lat: 46.8516177, lng: 1.2393998} },
+					{id: 3, loc: {lat: 46.8516177, lng: 1.2393998} },
+					{id: 4, loc: {lat: 46.8516177, lng: 1.2393998} }
+				];
+				var data = { vehicule : floteArray };   
 				json = JSON.stringify(data);  
 			case "/travel_to":
 				

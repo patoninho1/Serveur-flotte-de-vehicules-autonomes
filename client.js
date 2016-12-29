@@ -26,31 +26,32 @@ function validate(){
 
 
 function updateVehiculeLoc() {
-	
+
   //Get data from server
+  $.getJSON("http://localhost:8080/getVehiculeData", function(data) {
+		
+	console.log("server answer : " + data.vehicule[0].id);
+  
+	//remove old marker
+	for (var i = 0; i < markersVehicule.length; i++) {
+		markersVehicule[i].setMap(null);
+	}
+	markersVehicule = [];
 	  
-  //remove old marker
-  for (var i = 0; i < markersVehicule.length; i++) {
-    markersVehicule[i].setMap(null);
-  }
-  markersVehicule = [];
+	//Set new
+	for (i = 0; i < data.vehicule.length; i++) {				
+		var marker = new google.maps.Marker({
+			position: data.vehicule[i].loc,
+			map: map,
+			title: 'Hello World!',
+			icon: iconVehicule
+		});		
+		markersVehicule.push(marker);			
+	 }	 
   
-  //Set new
-  for (i = 0; i < 10; i++) {
-	
-	var myLatLng = {lat: (46.8516177)+(5-(Math.random()*10)), lng: (1.2393998)+(5-(Math.random()*10))};
-	 	
-	var marker = new google.maps.Marker({
-		position: myLatLng,
-		map: map,
-		title: 'Hello World!',
-		icon: iconVehicule
-	});
-	
-	markersVehicule.push(marker);	
-	
-  }
-  
+   });
+   
+   meteo_timeout = setTimeout("updateVehiculeLoc()", 1000);
 }
 
 function initMap() {
@@ -65,4 +66,4 @@ function initMap() {
    
 }
 
-
+updateVehiculeLoc();
