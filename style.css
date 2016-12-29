@@ -7,7 +7,7 @@ html,body{
 	font-weight			: normal;
 	padding				: 0px;
 	margin				: 0px;
-	overflow			: hidden;
+	//overflow			: hidden;
 	color				: #BDBDBD;
 }
 
@@ -16,11 +16,11 @@ html,body{
 /* Login form */
 #login{
 	width				: 300px;	
-	position			: absolute;
-	left				: 50%;
-	top					: 50%;
-	margin-left			: -150px;
-	margin-top			: -200px;
+	position			: relative;
+	//left				: 50%;
+	//top					: 50%;
+	//margin-left			: -150px;
+	//margin-top			: -200px;
 	border				: 1px solid black;
 }
 
@@ -65,6 +65,11 @@ input[type=button]:hover{
 
 /* Controle panel*/
 #main {
-	display: none;	
+	/*display: none;*/	
 }
 
+#map{
+	width : 500px;
+	height : 500px;
+	
+}
