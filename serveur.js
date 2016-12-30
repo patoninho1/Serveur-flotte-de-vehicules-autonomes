@@ -34,7 +34,7 @@ var franceLoc = {lat: 46.8516177, lng: 1.2393998};
 var home = {lat: 48.8142251, lng: 2.3950068};
 
 
-var last_id = 5;
+var last_id = 0;
 function getFreeID(){
 	last_id+=1;
 	return (last_id-1);
@@ -103,11 +103,11 @@ var server = http.createServer(function(req, res) {
 			
 			//Delet
 			case "/deletVehicule":			
-				if ('id' in params) {					
-					var i = getVehiculeById(params['id']);
-					console.log(params['id'] + "....." + floteArray[params['id']].id);
-					if (i != -1){
-						floteArray.splice(i, 1);						
+				if ('id' in params) {							
+					var index  = getVehiculeById(params['id']);
+					console.log("delet: " + params['id'] + " at index: " + index);					
+					if (index  > -1){
+						floteArray.splice(index , 1);						
 						data = { succes : true };  
 					}else{
 						data = { succes : false,  error : "ID not found" };
