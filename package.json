@@ -5,6 +5,8 @@
   "main": "serveur.js",
   "dependencies": {
     "google-distance": "^1.0.1"
+	"chai": "*",
+    "mocha": "*"
   },
   "devDependencies": {},
   "scripts": {

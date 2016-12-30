@@ -1,6 +1,7 @@
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
+var chai = require('chai');
 var distance = require('google-distance');
 
 
@@ -62,11 +63,11 @@ var server = http.createServer(function(req, res) {
 			break;
 			case "/getVehiculeData":
 				var floteArray = [
-					{id: 0, loc: {lat: 46.8516177, lng: 1.2393998} },
-					{id: 1, loc: {lat: 46.8516177, lng: 1.2393998} },
-					{id: 2, loc: {lat: 46.8516177, lng: 1.2393998} },
-					{id: 3, loc: {lat: 46.8516177, lng: 1.2393998} },
-					{id: 4, loc: {lat: 46.8516177, lng: 1.2393998} }
+					{id: 0, loc: {lat: 47.5516177, lng: 0.8393998}, dest: {lat: 41.8516177, lng: 5.2393998} },
+					{id: 1, loc: {lat: 45.4516177, lng: 1.7393998}, dest: {lat: 42.8516177, lng: 4.2393998} },
+					{id: 2, loc: {lat: 48.8516177, lng: 2.4393998}, dest: {lat: 43.8516177, lng: 3.2393998} },
+					{id: 3, loc: {lat: 44.5516177, lng: -1.1393998}, dest: {lat: 44.8516177, lng: 2.2393998} },
+					{id: 4, loc: {lat: 43.4516177, lng: -2.6393998}, dest: {lat: 45.8516177, lng: 1.2393998} }
 				];
 				var data = { vehicule : floteArray };   
 				json = JSON.stringify(data);  
