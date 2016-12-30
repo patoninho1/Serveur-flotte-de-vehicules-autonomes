@@ -47,10 +47,13 @@
 				
 						<div id = "data">
 							<h2>Connected !!</h2>
-							<label>Nombre total de vehicule : </label><label>none</label>
+							<label>Nombre total de vehicule : </label><label id="nbV" >none</label>
 							<br>
 							<label>Flotes : </label><label>none</label>		
 							<br><br>
+							<input type="button" value="Create new vehicule" onclick="newV()"/>
+							<br>
+							<input type="text" id="idV"/> <input type="button" value="Delete vehicule" onclick="deletV()"/>
 						</div>
 						
 					</div>

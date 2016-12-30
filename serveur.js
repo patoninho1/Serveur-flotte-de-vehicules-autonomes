@@ -31,6 +31,34 @@ function travel_to(params){
 	}
 }
 
+var franceLoc = {lat: 46.8516177, lng: 1.2393998};
+
+var last_id = 5;
+function getID(){
+	last_id+=1;
+	return (last_id-1);
+}
+
+function getVehiculeById(id){
+	for (i = 0; i < floteArray.length; i++) {	
+		if (floteArray[i].id == id){
+			return i;
+		}
+	}
+	return -1;
+}
+
+var floteArray = [
+	{id: 0, loc: {lat: 47.5516177, lng: 0.8393998}, dest: {lat: 41.8516177, lng: 5.2393998} },
+	{id: 1, loc: {lat: 45.4516177, lng: 1.7393998}, dest: {lat: 42.8516177, lng: 4.2393998} },
+	{id: 2, loc: {lat: 48.8516177, lng: 2.4393998}, dest: {lat: 43.8516177, lng: 3.2393998} },
+	{id: 3, loc: {lat: 44.5516177, lng: -1.1393998}, dest: {lat: 44.8516177, lng: 2.2393998} },
+	{id: 4, loc: {lat: 43.4516177, lng: -2.6393998}, dest: {lat: 45.8516177, lng: 1.2393998} }
+];
+
+
+
+
 var server = http.createServer(function(req, res) {
 	
 	//Get and parse argument and client IP
@@ -53,33 +81,58 @@ var server = http.createServer(function(req, res) {
 		res.writeHead(200, {"Content-Type": "text/plain"}); 	
 		res.end("Auth fail");
 	}else{	*/
-	
-	var json;
-	
-		switch(page){		
-			case "/login":
+	/*
+	case "/login":
 				var data = { auth: bob.auth(params,ip)};   
 				json = JSON.stringify(data);  
-			break;
-			case "/getVehiculeData":
-				var floteArray = [
-					{id: 0, loc: {lat: 47.5516177, lng: 0.8393998}, dest: {lat: 41.8516177, lng: 5.2393998} },
-					{id: 1, loc: {lat: 45.4516177, lng: 1.7393998}, dest: {lat: 42.8516177, lng: 4.2393998} },
-					{id: 2, loc: {lat: 48.8516177, lng: 2.4393998}, dest: {lat: 43.8516177, lng: 3.2393998} },
-					{id: 3, loc: {lat: 44.5516177, lng: -1.1393998}, dest: {lat: 44.8516177, lng: 2.2393998} },
-					{id: 4, loc: {lat: 43.4516177, lng: -2.6393998}, dest: {lat: 45.8516177, lng: 1.2393998} }
-				];
-				var data = { vehicule : floteArray };   
+			break;*/
+			
+			
+			
+	var data;
+	
+	
+		//CRUD Create Read Update Delete
+		switch(page){				
+		
+			//Create
+			case "/newVehicule":				
+				floteArray.push({id: getID(), loc: {lat: (47.5516177+(Math.random()*5)), lng: (0.8393998+(Math.random()*5))}, dest: {lat: 41.8516177, lng: 5.2393998} });					
+				data = { succes : true };   
 				json = JSON.stringify(data);  
-			case "/travel_to":
-				
-				//TODO
 			break;
+			
+			//Read
+			case "/getVehiculeData":				
+				data = { vehicule : floteArray };   
+				json = JSON.stringify(data);  
+			break;
+			
+			//Update
+			case "/changeVehiculeDest":
+			
+			break;
+			
+			//Read
+			case "/deletVehicule":			
+				if ('id' in params) {					
+					var i = getVehiculeById(params['id']);
+					if (i != -1){
+						floteArray.splice(i, 1);						
+						data = { succes : true };  
+					}else{
+						data = { succes : false,  error : "ID not found" };
+					}					
+				}else{
+					data = { succes : false, error : "wrong params" };
+				}
+			break;
+			
 		}
 		
 		
-		
-		res.end(json);
+	var json = JSON.stringify(data); 
+	res.end(json);
 		
 		
 	//}
