@@ -45,26 +45,28 @@ function updateVehiculeLoc() {
 
 	try{
 	  //Get data from server
-	  $.getJSON("http://localhost:8080/getVehiculeData", function(data) {	
-	  
-		//console.log("server answer !");		
+	  $.getJSON("http://localhost:8080/getVehiculeData", function(data) {		
 		
 		//Only change display if new data is different from old
 		if ( JSON.stringify(data.vehicule).localeCompare(JSON.stringify(last_data)) ){
 			console.log("server new data !");	
-			
-			//remove old marker
-			for (var i = 0; i < travelVehicule.length; i++) {
-				travelVehicule[i].setMap(null);
-			}
-			for (var i = 0; i < markersVehicule.length; i++) {
+				
+			//remove old vehicule marker
+			for (var i = 0; i < markersVehicule.length; i++) {	
 				markersVehicule[i].setMap(null);
 			}
+			
+			//remove old travel line
+			for (var i = 0; i < travelVehicule.length; i++) {				
+				travelVehicule[i].setMap(null);
+			}			
 			markersVehicule = [];
 			travelVehicule = [];
-			  
-			//Set new Vehicule
-			for (i = 0; i < data.vehicule.length; i++) {				
+			  			
+			//For earch Vehicule on JSON
+			for (i = 0; i < data.vehicule.length; i++) {	
+
+				//Set Vehicule on the map
 				var marker = new google.maps.Marker({
 					position: data.vehicule[i].loc,
 					map: map,
@@ -73,37 +75,41 @@ function updateVehiculeLoc() {
 				});		
 				google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { alert('Right click triggered'); });
 				markersVehicule.push(marker);					
-			}	 
-			$('#nbV').text(data.vehicule.length);
 			
-			//Set they trajet
-			for (i = 0; i < data.vehicule.length; i++) {			
-				if (data.vehicule[i].dest.lat != data.vehicule[i].loc.lat && data.vehicule[i].dest.lng != data.vehicule[i].loc.lng){					
-					
-					
+				//Set the trajet on the map
+				if (data.vehicule[i].dest.lat != data.vehicule[i].loc.lat && data.vehicule[i].dest.lng != data.vehicule[i].loc.lng){	
 					var line = new google.maps.Polyline({
 						path: [data.vehicule[i].loc,data.vehicule[i].dest],
 						strokeOpacity: 0,
 						icons: [{
-						  icon: lineSymbol,
-						  offset: '0',
-						  repeat: '20px'
+							icon: lineSymbol,
+							offset: '0',
+							repeat: '20px'
 						}]
 					});
-						
+							
 					travelVehicule.push(line);			
 					line.setMap(map);	
 				}	
+				
+				//Get the google distance Data
+				//console.log(data.vehicule[i].distanceData);
+			
 			}
-		
+			
+			//Update the vehicule counter
+			$('#nbV').text(data.vehicule.length);
 		}
 		
+		//Update the last data for next comparaison
 		last_data = data.vehicule;
 		
 	  });
 	 
+		//Next call
 	    update_timeout = setTimeout("updateVehiculeLoc()", 5000);	  
 	}catch(err){
+		//Next call
 		update_timeout = setTimeout("updateVehiculeLoc()", 5000);		
 	}
 	
