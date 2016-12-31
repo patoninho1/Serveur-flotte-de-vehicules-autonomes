@@ -12,8 +12,8 @@ function login(username,pass) {
 
 method.auth = function(params,ip) {
 	this.isConnected = false;
-	if ('user' in params && 'pass' in params) {
-		if(params['user'] == this.username && params['pass'] == this.pass){
+	if ('user' in params && 'pass' in params) {		
+		if(params['user'] == this.username && params['pass'] == this.pass){			
 			this.isConnected = true;	
 			this.ip = ip;
 		}
@@ -21,7 +21,7 @@ method.auth = function(params,ip) {
     return this.isConnected;
 };
 
-method.disconnected = function() {
+method.disconnect = function() {
 	this.isConnected = false;	
 };
 

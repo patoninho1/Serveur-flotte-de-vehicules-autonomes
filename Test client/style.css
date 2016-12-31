@@ -36,7 +36,7 @@ html,body, main {
 #login{
 	width				: 90%;	
 	margin				: auto;
-	display				: none;
+	//display				: none;
 }
 
 h2{

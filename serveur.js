@@ -123,14 +123,16 @@ var server = http.createServer(function(req, res) {
 	res.writeHead(200, {"Content-Type": "application/json"});  
 		
 	//Prepare the futur data to be send
-	var data;	
+	var data;		
+	
+	if (bob.isConnected){
 	
 		//CRUD Create Read Update Delete
 		switch(page){
 
 			//Disconnect
 			case "/disconnect":	
-			
+				bob.disconnect();
 			break;
 			
 			//Create Vehicule
@@ -171,12 +173,12 @@ var server = http.createServer(function(req, res) {
 			
 			//Read Vehicule Data
 			case "/getVehiculeData":				
-				data = { vehicule : vehiculeArray };   				
+				data = { succes : true, vehicule : vehiculeArray };   				
 			break;
 			
 			//Read Group Data
 			case "/getGroupData":				
-				data = { vehicule : vehiculeArray };   				
+				data = { succes : true, vehicule : vehiculeArray };   				
 			break;
 			
 			//Update Vehicule Dest
@@ -223,7 +225,18 @@ var server = http.createServer(function(req, res) {
 			break;
 			
 		}
-		
+	
+	}else{
+		if (page == "/login"){
+			if(bob.auth(params,ip)){
+				data = { succes : true };  
+			}else{
+				data = { succes : false, error : "Wrong login or password"};
+			}
+		}else{			
+			data = { succes : false, error : "You have to login for acces to this"};
+		}
+	}
 	//Convert the data to JSON
 	var json = JSON.stringify(data); 
 	//Send the JSON to the client
