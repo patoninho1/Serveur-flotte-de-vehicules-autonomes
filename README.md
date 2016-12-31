@@ -1,5 +1,4 @@
 # Server autonomous vehicle
-Server autonomous vehicle
 
 Install instruction:
 
