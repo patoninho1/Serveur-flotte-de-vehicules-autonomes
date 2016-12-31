@@ -4,7 +4,7 @@
   "description": "",
   "main": "serveur.js",
   "dependencies": {
-    "google-distance": "^1.0.1"
+    "google-distance": "^1.0.1",
 	"chai": "*",
     "mocha": "*"
   },

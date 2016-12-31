@@ -10,6 +10,7 @@ var distance = require('google-distance');
 var vehicule = require("./vehicule.js");
 var vA = new vehicule();
 
+var maxVehicule = 15;
 
 var account = require("./login.js");
 var bob = new account("bob","mdpbob");
@@ -35,7 +36,7 @@ var home = {lat: 48.8142251, lng: 2.3950068};
 
 
 var last_id = 0;
-function getFreeID(){
+function getFreeID(){	
 	last_id+=1;
 	return (last_id-1);
 }
@@ -78,7 +79,7 @@ var server = http.createServer(function(req, res) {
 		
 			//Create
 			case "/newVehicule":				
-				if (floteArray.length < 15) {
+				if (floteArray.length < maxVehicule) {
 					var newId = getFreeID();
 					var rayonOfSpawn = 2.0;
 					var newlat = home.lat + rayonOfSpawn * Math.cos( (2 * Math.PI/180) * newId*12);
@@ -98,7 +99,19 @@ var server = http.createServer(function(req, res) {
 			
 			//Update
 			case "/changeVehiculeDest":
-			
+				if ('id' in params && 'lat' in params && 'lng' in params) {	
+					var index  = getVehiculeById(params['id']);
+					console.log("move: " + params['id'] + "to: " +  params['lat'] + ";" + params['lng'] );					
+					if (index  > -1){
+						floteArray[index].dest.lat = params['lat'];	
+						floteArray[index].dest.lng = params['lng'];									
+						data = { succes : true };  
+					}else{
+						data = { succes : false,  error : "ID not found" };
+					}		
+				}else{
+					data = { succes : false, error : "wrong params" };
+				}				
 			break;
 			
 			//Delet

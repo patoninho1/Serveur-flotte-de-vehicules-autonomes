@@ -5,8 +5,8 @@ var travelVehicule = [];
 
 var last_data;
 
-//var iconVehicule = './drone.png';
-
+var franceLoc = {lat: 46.8516177, lng: 1.2393998};
+var home = {lat: 48.8142251, lng: 2.3950068};
 
 var iconVehicule;
 var iconHome;
@@ -71,7 +71,8 @@ function updateVehiculeLoc() {
 					title: 'Drone ID: ' + data.vehicule[i].id + '\nCoordinate: ' + JSON.stringify(data.vehicule[i].loc) + '\nTarget: ' + JSON.stringify(data.vehicule[i].dest) + '\nSpeed: ' + 100 + 'km/h'/*data.vehicule[i].speed*/,
 					icon: iconVehicule
 				});		
-				markersVehicule.push(marker);			
+				google.maps.event.addListener(marker,  'rightclick',  function(mouseEvent) { alert('Right click triggered'); });
+				markersVehicule.push(marker);					
 			}	 
 			$('#nbV').text(data.vehicule.length);
 			
@@ -142,12 +143,44 @@ function deletV() {
 	updateVehiculeLoc();
 }
 
+function setTargetV() {		
+
+	var id = $('#idV').val();
+	home
+	console.log(id);
+
+	$.getJSON("http://localhost:8080/changeVehiculeDest?id=" + id + "&lat=" + home.lat + "&lng=" + home.lng, function(data) {
+		if (data.succes == true){
+			console.log("eee");
+		}else{		
+			alert(data.error);
+		}		
+	});
+	
+	//Update map
+	updateVehiculeLoc();
+}
+
+
+function setTargetG() {		
+
+	var id = $('#idV').val();
+	console.log(id);
+
+	$.getJSON("http://localhost:8080/deletVehicule?id=" + id , function(data) {
+		if (data.succes == true){
+			
+		}else{		
+			alert(data.error);
+		}		
+	});
+	
+	//Update map
+	updateVehiculeLoc();
+}
 
 function initMap() {
 	
-	var franceLoc = {lat: 46.8516177, lng: 1.2393998};
-	var home = {lat: 48.8142251, lng: 2.3950068};
-
 	map = new google.maps.Map(document.getElementById('map'), {
 	   zoom: 5,
 	   center: franceLoc,
