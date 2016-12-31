@@ -9,11 +9,11 @@ Install instruction:
 Possible call (CRUD and login):
 <br>(remplace localhost by the server ip)
 
-- Login: http://localhost:8080/login?user=YourUserName&pass=YourPassword
-- Create: http://localhost:8080/newVehicule this create a new vehicle (spawn near to the home point).
-- Read: http://localhost:8080/getVehiculeData this get a JSON with the data of all the vehicle.
-- Update: http://localhost:8080/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng this set a new destination for the selected vehicle.
-- Delete: http://localhost:8080/deletVehicule?id=YourId this delet the selected vehicle. 
+- Login: http://localhost:8080/login?user=YourUserName&pass=YourPassword This log you with the username and password pass in parameter
+- Create: http://localhost:8080/newVehicule This create a new vehicle (spawn near to the home point).
+- Read: http://localhost:8080/getVehiculeData This get a JSON with the data of all the vehicle.
+- Update: http://localhost:8080/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
+- Delete: http://localhost:8080/deletVehicule?id=YourId This delet the selected vehicle. 
 
 Testing client :
 
