@@ -23,9 +23,9 @@ Possible call (CRUD and login):
 
 ##Testing client:
 
-- Open index.html in the "Test client" floders (js have to be alowed by your webrowser)
-- Wait until google maps API is loaded
-- Login using the test creditential (Login "bob" Password "mdpbob")
+- Open index.html in the "Test client" floders (js have to be alowed by your webrowser).
+- Wait until google maps API is loaded.
+- Login using the test creditential (Login "bob" Password "mdpbob").
 - Now you can use the left pannel to create new vehicle, send them were you want, groupe them, or delet them.
 
 ##Rules:
@@ -33,5 +33,5 @@ Possible call (CRUD and login):
 - There is a max number of vehicle (var maxVehicule can be change in server.js).
 - The last order erase the older (example if you set a destination to a vehicule and without waiting the end change for a new on, the vehicule go directly from where he is to the new one). 
 - You cant set new destination for a vehicule in a group (have to change the groupe destination, or remove him of the group for set his personal destination).
-- You cant have more group than vehicule (max number of groupe = actual number of vehicule)
+- You cant have more group than vehicule (max number of groupe = actual number of vehicule).
 
