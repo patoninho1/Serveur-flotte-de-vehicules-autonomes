@@ -1,6 +1,10 @@
+var distance = require('google-distance');
+distance.apiKey = 'AIzaSyCQcbdCHq1yqWbrTymrJXL9AJyFxKuowa0';
+
 var method = account.prototype;
 
 //Methode for manage account
+var maxUser = 5;
 var ListOfUser = [];
 
 function account() {
@@ -8,7 +12,12 @@ function account() {
 }
 
 method.addUser = function(username,passw) {
-	ListOfUser.push({user: username,pass: passw,ip: 'ip',isConnected: false,vehicule: [],last_v_id: 0,group: [],last_g_id:0});
+	if (ListOfUser.length<maxUser){
+		ListOfUser.push({user: username,pass: passw,ip: 'ip',isConnected: false,vehicule: [],last_v_id: 0,group: [],last_g_id:0});
+		return true;
+	}else{
+		return false;
+	}	
 };
 
 method.isConnected = function(ip) {
@@ -252,29 +261,64 @@ method.deletGroup = function(params) {
 
 
 
+//This manage to make all the vehicule of the "world" to move to they destination over the time and depending of them speed
+var lastdistdata = ''
+method.UpdateAllPosition = function(params) {	
 
-
-	/*this.username = username;
-	this.pass = pass;
-	this.ip = "";
-	this.isConnected = false;*/
-method.auth = function(params,ip) {
-	this.isConnected = false;
-	if ('user' in params && 'pass' in params) {		
-		if(params['user'] == this.username && params['pass'] == this.pass){			
-			this.isConnected = true;	
-			this.ip = ip;
+	for (user = 0; user < ListOfUser.length; user++) {
+		for (i = 0; i < ListOfUser[user].vehicule.length; i++) {	
+			
+			//Update Google distance Data
+			var id = ListOfUser[user].vehicule[i].id;
+			var ori = ListOfUser[user].vehicule[i].loc.lat+','+ListOfUser[user].vehicule[i].loc.lng;
+			var dest = ListOfUser[user].vehicule[i].dest.lat+','+ListOfUser[user].vehicule[i].dest.lng;
+			
+			distance.get({
+				index: id,
+				origin: ori,
+				destination: dest
+			},function(err, data) {			  
+				if (err) return console.log(err);			
+					lastdistdata = data;	
+				});			
+				
+			if (lastdistdata.index == ListOfUser[user].vehicule[i].id){
+				ListOfUser[user].vehicule[i].distanceData = lastdistdata;
+				//console.log(lastdistdata.destination)
+			}	
+			
+			//Move the vehicule depending of is speed
+			var pas = vehiculeSpeed/10000;
+			
+			if (ListOfUser[user].vehicule[i].loc != ListOfUser[user].vehicule[i].dest){				
+				//Lat
+				if (ListOfUser[user].vehicule[i].loc.lat < ListOfUser[user].vehicule[i].dest.lat){
+					ListOfUser[user].vehicule[i].loc.lat = ListOfUser[user].vehicule[i].loc.lat + pas;
+				}else if (ListOfUser[user].vehicule[i].loc.lat > ListOfUser[user].vehicule[i].dest.lat){
+					ListOfUser[user].vehicule[i].loc.lat = ListOfUser[user].vehicule[i].loc.lat - pas;
+				}else{
+					ListOfUser[user].vehicule[i].loc.lat = ListOfUser[user].vehicule[i].dest.lat;
+				}				
+				//Lng
+				if (ListOfUser[user].vehicule[i].loc.lng < ListOfUser[user].vehicule[i].dest.lng){
+					ListOfUser[user].vehicule[i].loc.lng = ListOfUser[user].vehicule[i].loc.lng + pas;
+				}else if (ListOfUser[user].vehicule[i].loc.lng > ListOfUser[user].vehicule[i].dest.lng){
+					ListOfUser[user].vehicule[i].loc.lng = ListOfUser[user].vehicule[i].loc.lng - pas;
+				}else{
+					ListOfUser[user].vehicule[i].loc.lng = ListOfUser[user].vehicule[i].dest.lng;
+				}
+			}	
+			
 		}
-	}			
-    return this.isConnected;
-};
-
-/*
-method.isConnected = function(ip) {
-	if(ip != this.ip){
-		this.isConnected = false;
 	}
-    return this.isConnected;
-};*/
+	
+}
+
+
+
+
+
+
+
 
 module.exports = account;

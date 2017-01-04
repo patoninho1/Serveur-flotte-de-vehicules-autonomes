@@ -2,8 +2,7 @@ var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
 var chai = require('chai');
-var distance = require('google-distance');
-distance.apiKey = 'AIzaSyCQcbdCHq1yqWbrTymrJXL9AJyFxKuowa0';
+
 
 //Add our class object witch manage the account
 var accountManager = require("./account.js");
@@ -17,56 +16,11 @@ var aManager = new accountManager();
 aManager.addUser("bob","mdpbob");
 
 
-/*
 //Move Timer, this manage the travel of all the vehicule and actualise they position every second
-var lastdistdata = ''
 setInterval(function(){	
-
-	for (i = 0; i < vehiculeArray.length; i++) {
-	
-		//Update Google distance Data
-		var id = vehiculeArray[i].id;
-		var ori = vehiculeArray[i].loc.lat+','+vehiculeArray[i].loc.lng;
-		var dest = vehiculeArray[i].dest.lat+','+vehiculeArray[i].dest.lng;
-		
-		distance.get({
-			index: id,
-			origin: ori,
-			destination: dest
-		},function(err, data) {			  
-			if (err) return console.log(err);			
-				lastdistdata = data;	
-			});			
-			
-		if (lastdistdata.index == vehiculeArray[i].id){
-			vehiculeArray[i].distanceData = lastdistdata;
-			//console.log(lastdistdata.destination)
-		}	
-		
-		//Move the vehicule depending of is speed
-		var pas = vehiculeSpeed/10000;
-		
-		//Lat
-		if (vehiculeArray[i].loc.lat < vehiculeArray[i].dest.lat){
-			vehiculeArray[i].loc.lat = vehiculeArray[i].loc.lat + pas;
-		}else if (vehiculeArray[i].loc.lat > vehiculeArray[i].dest.lat){
-			vehiculeArray[i].loc.lat = vehiculeArray[i].loc.lat - pas;
-		}else{
-			vehiculeArray[i].loc.lat = vehiculeArray[i].dest.lat;
-		}
-		
-		//Lng
-		if (vehiculeArray[i].loc.lng < vehiculeArray[i].dest.lng){
-			vehiculeArray[i].loc.lng = vehiculeArray[i].loc.lng + pas;
-		}else if (vehiculeArray[i].loc.lng > vehiculeArray[i].dest.lng){
-			vehiculeArray[i].loc.lng = vehiculeArray[i].loc.lng - pas;
-		}else{
-			vehiculeArray[i].loc.lng = vehiculeArray[i].dest.lng;
-		}		
-		
-	}  	
+	aManager.UpdateAllPosition();
 }, 1000); 
-*/
+
 
 //Main function that handel the client request
 var server = http.createServer(function(req, res) {

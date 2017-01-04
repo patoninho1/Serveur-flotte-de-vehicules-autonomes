@@ -23,11 +23,11 @@ var iconFlote = '';
 
 function validate(){
  
-	var username = $("#username").value;
-	var pass = $("#password").value;
+	var username = $("#username").val();
+	var pass = $("#password").val();
 	
 	console.log(username + " " + pass);
-	/*
+	
 	$.getJSON("http://localhost:8080/login?user=" + username + "&pass=" + pass, function(data) {
 		if (data.succes == true){
 			alert("You are now log as " + username);
@@ -36,7 +36,7 @@ function validate(){
 		}else{		
 			alert(data.error);
 		}	
-	}); */
+	}); 
 	
 }
 
@@ -79,7 +79,8 @@ function updateVehiculeLoc() {
 					markersVehicule.push(marker);					
 				
 					//Set the trajet on the map
-					if (data.vehicule[i].dest.lat != data.vehicule[i].loc.lat && data.vehicule[i].dest.lng != data.vehicule[i].loc.lng){	
+					if (data.vehicule[i].dest.lat != data.vehicule[i].loc.lat || data.vehicule[i].dest.lng != data.vehicule[i].loc.lng){	
+					console.log("rrrrrrr")
 						var line = new google.maps.Polyline({
 							path: [data.vehicule[i].loc,data.vehicule[i].dest],
 							strokeOpacity: 0,
@@ -141,7 +142,7 @@ function newV() {
 function deletV() {		
 
 	var id = $('#idV').val();
-	console.log(id);
+
 
 	$.getJSON("http://localhost:8080/deletVehicule?id=" + id , function(data) {
 		if (data.succes == true){
@@ -159,11 +160,11 @@ function setTargetV() {
 
 	var id = $('#idV').val();
 	home
-	console.log(id);
+
 
 	$.getJSON("http://localhost:8080/changeVehiculeDest?id=" + id + "&lat=" + home.lat + "&lng=" + home.lng, function(data) {
 		if (data.succes == true){
-			console.log("eee");
+
 		}else{		
 			alert(data.error);
 		}		
@@ -177,7 +178,7 @@ function setTargetV() {
 function setTargetG() {		
 
 	var id = $('#idV').val();
-	console.log(id);
+
 
 	$.getJSON("http://localhost:8080/deletVehicule?id=" + id , function(data) {
 		if (data.succes == true){
