@@ -5,70 +5,19 @@ var chai = require('chai');
 var distance = require('google-distance');
 distance.apiKey = 'AIzaSyCQcbdCHq1yqWbrTymrJXL9AJyFxKuowa0';
 
+//Add our class object witch manage the account
+var accountManager = require("./account.js");
 
-var account = require("./login.js");
-var bob = new account("bob","mdpbob");
-
+//Global setting
 var franceLoc = {lat: 46.8516177, lng: 1.2393998};
-var home = {lat: 48.8142251, lng: 2.3950068};
+var homeSpawn = {lat: 48.8142251, lng: 2.3950068};
 
-var maxVehicule = 15;
-var vehiculeSpeed = 100;
-var vehiculeArray = [];
-var groupArray = [];
-
-function travel_to(params){
-	if ('user' in params && 'pass' in params) {
-		
-		distance.get(
-		  {
-			origin: 'San Francisco, CA',
-			destination: 'San Diego, CA'
-		  },
-		  function(err, data) {
-			if (err) return console.log(err);
-			console.log(data);
-		});
-		
-	}
-}
+//Add the test user
+var aManager = new accountManager();
+aManager.addUser("bob","mdpbob");
 
 
-//Function that return a unused V ID
-var last_v_id = 0;
-function getFreeVID(){	
-	last_v_id+=1;
-	return (last_v_id-1);
-}
-
-//Function that return a vehicule index coorespond to is ID 
-function getVehiculeById(id){
-	for (i = 0; i < vehiculeArray.length; i++) {	
-		if (vehiculeArray[i].id == id){
-			return i;
-		}
-	}
-	return -1;
-}
-
-//Function that return a unused G ID
-var last_g_id = 0;
-function getFreeGID(){	
-	last_g_id+=1;
-	return (last_g_id-1);
-}
-
-//Function that return a group index coorespond to is ID 
-function getGroupById(id){
-	for (i = 0; i < groupArray.length; i++) {	
-		if (groupArray[i].id == id){
-			return i;
-		}
-	}
-	return -1;
-}
-
-
+/*
 //Move Timer, this manage the travel of all the vehicule and actualise they position every second
 var lastdistdata = ''
 setInterval(function(){	
@@ -117,7 +66,7 @@ setInterval(function(){
 		
 	}  	
 }, 1000); 
-
+*/
 
 //Main function that handel the client request
 var server = http.createServer(function(req, res) {
@@ -142,162 +91,114 @@ var server = http.createServer(function(req, res) {
 	var data;		
 	
 	//Il you are not loged
-	if (bob.isConnected){
-	
+	if (aManager.isConnected(ip)){
 		//CRUD Create Read Update Delete
 		switch(page){
 
 			//Disconnect
+			//Test it with http://localhost:8080/disconnect
 			case "/disconnect":	
-				bob.disconnect();
+				aManager.disconnect();
+				data = { succes : true };  
 			break;
 			
 			//Create Vehicule
-			case "/newVehicule":				
-				if (vehiculeArray.length < maxVehicule) {
-					var newId = getFreeVID();
-					var rayonOfSpawn = 2.0;
-					var newlat = home.lat + rayonOfSpawn * Math.cos( (2 * Math.PI/180) * newId*12);
-					var newlng = home.lng + rayonOfSpawn * Math.sin( (2 * Math.PI/180) * newId*12);	
-					
-					var dd = { index: newId,
-							  distance: '1 m',
-							  distanceValue: 0,
-							  duration: '1 min',
-							  durationValue: 0,
-							  origin: {lat: newlat, lng: newlng},
-							  destination: {lat: newlat, lng: newlng},
-							  mode: 'driving',
-							  units: 'metric',
-							  language: 'en',
-							  avoid: null,
-							  sensor: false };
-					
-					vehiculeArray.push({id: newId, loc: {lat: newlat, lng: newlng}, dest: {lat: newlat, lng: newlng}, distanceData: dd});	
-					
-					
-					
-					data = { succes : true };   					
+			//Test it with http://localhost:8080/newVehicule
+			case "/newVehicule":				    
+				if(aManager.addVehicule(homeSpawn)){
+					console.log("Creat a new vehicule");
+					data = { succes : true };   	
 				} else {
-					data = { succes : false,  error : "You have rush the max limit of 15 drone" };   
+					data = { succes : false,  error : "You have rush the max limit of drone" };   
 				}
 			break;
 			
 			//Create Group
+			//Test it with http://localhost:8080/newGroup
 			case "/newGroup":	
-				if (groupArray.length < vehiculeArray.length) {
-					var newId = getFreeVID();
-					groupArray.push({id: newId, vehicule: []});
-					data = { succes : true };   					
+				if(aManager.addGroup()){
+					console.log("Creat a new group");
+					data = { succes : true };   	
 				} else {
 					data = { succes : false,  error : "You have to mutch group compare to your number of vehicule" };   
 				}
 			break;
 			
 			//Read Vehicule Data
-			case "/getVehiculeData":				
-				data = { succes : true, vehicule : vehiculeArray };   				
+			//Test it with http://localhost:8080/getVehiculeData
+			case "/getVehiculeData":	
+				console.log("Send vehicule data");			
+				data = { succes : true, vehicule : aManager.getVehiculeData() };   				
 			break;
 			
 			//Read Group Data
-			case "/getGroupData":				
-				data = { succes : true, group : groupArray };   				
+			//Test it with http://localhost:8080/getGroupData
+			case "/getGroupData":		
+				console.log("Send groups data");
+				data = { succes : true, group : aManager.getGroupData() };   				
 			break;
 			
 			//Update Vehicule Dest
-			case "/changeVehiculeDest":
-				if ('id' in params && 'lat' in params && 'lng' in params) {	
-					var index  = getVehiculeById(params['id']);
-					console.log("move: " + params['id'] + "to: " +  params['lat'] + ";" + params['lng'] );					
-					if (index  > -1){
-						vehiculeArray[index].dest.lat = parseFloat(params['lat']);	
-						vehiculeArray[index].dest.lng = parseFloat(params['lng']);									
-						data = { succes : true };  
-					}else{
-						data = { succes : false,  error : "ID not found" };
-					}		
+			//Test it with http://localhost:8080/changeVehiculeDest?id=0&lat=42.42&lng=42.42
+			case "/changeVehiculeDest":			
+				if(aManager.changeVehiculeDest(params)){
+					console.log("move vehicule: " + params['id'] + " to: " +  params['lat'] + ";" + params['lng'] );
+					data = { succes : true };
 				}else{
 					data = { succes : false, error : "wrong params" };
-				}				
+				}	
 			break;
 			
 			//Update Group Dest
+			//Test it with http://localhost:8080/changeGroupDest?id=0&lat=42.42&lng=42.42
 			case "/changeGroupDest":
-				if ('id' in params && 'lat' in params && 'lng' in params) {	
-					var index  = getGroupById(params['id']);
-					if (index > -1){
-						for (i = 0; i < groupArray[index].vehicule.length; i++) {	
-							var indexV  = getVehiculeById(groupArray[index].vehicule[i].id);
-							vehiculeArray[indexV].dest.lat = parseFloat(params['lat']);	
-							vehiculeArray[indexV].dest.lng = parseFloat(params['lng']);	
-						}
-					}else{
-						
-					}
+				if(aManager.changeGroupDest(params)){
+					console.log("move groupe: " + params['id'] + " to: " +  params['lat'] + ";" + params['lng'] );	
+					data = { succes : true };
 				}else{
 					data = { succes : false, error : "wrong params" };
-				}
+				}			
 			break;			
 			
-			//Update Group Dest
+			//Update Group member (add)
+			//Test it with http://localhost:8080/deletVehicule?id=0
 			case "/addToGroup":
-				if ('gid' in params && 'vid' in params) {	
-					var indexG = getGroupById(params['gid']);
-					var indexV = getGroupById(params['vid']);
-					if (indexG > -1 && indexV > -1){
-						groupArray[indexG].vehicule.push(vid);
-						data = { succes : true };
-					}else{
-						data = { succes : false,  error : "VID or GID not found" };
-					}					
+			    if(aManager.deletVehicule(params)){
+					console.log("Vehicule: " + params['vid'] + " add to group: " + params['gid']);
+					data = { succes : true }; 				
 				}else{
 					data = { succes : false, error : "wrong params" };
 				}
 			break;
 			
-			//Update Group Dest
-			case "/rmToGroup":
-				if ('gid' in params && 'vid' in params) {	
-					var indexG = getGroupById(params['gid']);
-					var indexV = getGroupById(params['vid']);
-					if (indexG > -1 && indexV > -1){
-						groupArray[indexG].vehicule.splice(indexV , 1);
-						data = { succes : true };
-					}else{
-						data = { succes : false,  error : "VID or GID not found" };
-					}					
+			//Update Group member (remove)
+			//Test it with http://localhost:8080/deletVehicule?id=0
+			case "/rmToGroup":			
+				if(aManager.rmToGroup(params)){
+					console.log("Vehicule: " + params['vid'] + " remove of group: " + params['gid']);
+					data = { succes : true }; 
 				}else{
 					data = { succes : false, error : "wrong params" };
 				}
 			break;
 			
 			//Delete Vehicule
-			case "/deletVehicule":			
-				if ('id' in params) {							
-					var index  = getVehiculeById(params['id']);
-					console.log("delet vehicule: " + params['id'] + " at index: " + index);					
-					if (index  > -1){
-						vehiculeArray.splice(index , 1);						
-						data = { succes : true };  
-					}else{
-						data = { succes : false,  error : "ID not found" };
-					}					
+			//Test it with http://localhost:8080/deletVehicule?id=0
+			case "/deletVehicule":	
+				if(aManager.deletVehicule(params)){
+					console.log("Vehicule: " + params['id'] + " deleted");
+					data = { succes : true }; 
 				}else{
 					data = { succes : false, error : "wrong params" };
 				}
 			break;
 			
 			//Delete Group
+			//Test it with http://localhost:8080/deletGroup?id=0
 			case "/deletGroup":	
-				if ('id' in params) {	
-					var index  = getGroupById(params['id']);
-					console.log("delet group: " + params['id'] + " at index: " + index);					
-					if (index  > -1){
-						groupArray.splice(index , 1);						
-						data = { succes : true };  
-					}else{
-						data = { succes : false,  error : "ID not found" };
-					}			
+				if(aManager.deletGroup(params)){
+					console.log("Group: " + params['id'] + " deleted");
+					data = { succes : true }; 
 				}else{
 					data = { succes : false, error : "wrong params" };
 				}
@@ -306,10 +207,10 @@ var server = http.createServer(function(req, res) {
 		}
 	
 	}else{
-		
-	//Il you are not already loged
-		if (page == "/login"){
-			if(bob.auth(params,ip)){
+	    //Il you are not already loged	
+		//Test it with http://localhost:8080/login?user=bob&pass=mdpbob
+		if (page == "/login"){		
+			if(aManager.connect(params,ip)){
 				data = { succes : true };  
 			}else{
 				data = { succes : false, error : "Wrong login or password"};
