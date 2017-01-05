@@ -2,8 +2,8 @@
 
 ##Install instruction:
 
-- go to the main floders
-- npm install
+- go to the main floders.
+- npm install.
 - Start the server: node serveur.js
 
 Possible call (CRUD and login):

@@ -80,7 +80,6 @@ function updateVehiculeLoc() {
 				
 					//Set the trajet on the map
 					if (data.vehicule[i].dest.lat != data.vehicule[i].loc.lat || data.vehicule[i].dest.lng != data.vehicule[i].loc.lng){	
-					console.log("rrrrrrr")
 						var line = new google.maps.Polyline({
 							path: [data.vehicule[i].loc,data.vehicule[i].dest],
 							strokeOpacity: 0,
