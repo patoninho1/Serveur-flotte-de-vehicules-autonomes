@@ -16,8 +16,8 @@ Possible call (CRUD and login):
 - Read group: http://localhost:8080/getGroupData This get a JSON with the data of all the group.
 - Update vehicle: http://localhost:8080/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
 - Update group: http://localhost:8080/changeGroupDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected group.
-- Update group: http://localhost:8080/addToGroup?gid=YourGroupId&vid=YourVheiculeID This add the vid vehicule to the gid group.
-- Update group: http://localhost:8080/rmToGroup?gid=YourGroupId&vid=YourVheiculeID This remove the vid vehicule to the gid group.
+- Update group: http://localhost:8080/addToGroup?gid=YourGroupId&vid=YourVehiculeID This add the vid vehicule to the gid group.
+- Update group: http://localhost:8080/rmToGroup?gid=YourGroupId&vid=YourVehiculeID This remove the vid vehicule to the gid group.
 - Delete vehicle: http://localhost:8080/deletVehicule?id=YourId This delet the selected vehicle. 
 - Delete group: http://localhost:8080/deletVehicule?id=YourId This delet the selected group. 
 
