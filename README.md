@@ -1,4 +1,8 @@
 # Server autonomous vehicle
+##Prerequisities
+
+- https://git-scm.com/
+- https://nodejs.org/en/
 
 ##Install instruction:
 
