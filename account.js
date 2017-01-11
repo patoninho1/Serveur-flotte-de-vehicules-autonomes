@@ -29,10 +29,10 @@ method.isConnected = function(ip) {
     return false;
 };
 
-method.connect = function(params,ip) {
-	if ('user' in params && 'pass' in params) {
+method.connect = function(params,ip) {	
+	if (params.user && params.pass) {
 		for (i = 0; i < ListOfUser.length; i++) {	
-			if(ListOfUser[i].user == params['user'] &&  ListOfUser[i].pass == params['pass']){
+			if(ListOfUser[i].user == params.user &&  ListOfUser[i].pass == params.pass){
 				ListOfUser[i].isConnected = true;
 				ListOfUser[i].ip = ip;
 				return ListOfUser[i].isConnected;
@@ -124,11 +124,11 @@ function getVehiculeById(id,user){
 method.changeVehiculeDest = function(params) {	
 	var user = getCurrentUserID();
 	
-	if ('id' in params && 'lat' in params && 'lng' in params) {	
-		var index  = getVehiculeById(params['id'],user);							
+	if (params.id && params.lat && params.lng) {	
+		var index  = getVehiculeById(params.id,user);							
 		if (index  > -1){
-			ListOfUser[user].vehicule[index].dest.lat = parseFloat(params['lat']);	
-			ListOfUser[user].vehicule[index].dest.lng = parseFloat(params['lng']);									
+			ListOfUser[user].vehicule[index].dest.lat = parseFloat(params.lat);	
+			ListOfUser[user].vehicule[index].dest.lng = parseFloat(params.lng);									
 			return true;			
 		}	
 	}			
@@ -139,8 +139,8 @@ method.changeVehiculeDest = function(params) {
 method.deletVehicule = function(params) {
 	var user = getCurrentUserID();
 
-	if ('id' in params) {							
-		var index  = getVehiculeById(params['id'],user);			
+	if (params.id) {							
+		var index  = getVehiculeById(params.id,user);			
 		if (index  > -1){
 			ListOfUser[user].vehicule.splice(index , 1);
 			return true;
@@ -193,14 +193,14 @@ function getGroupById(id,user){
 method.changeGroupDest = function(params) {	
 	var user = getCurrentUserID();
 	
-	if ('id' in params && 'lat' in params && 'lng' in params) {	
-		var index = getGroupById(params['id'],user);							
+	if (params.id && params.lat && params.lng) {	
+		var index = getGroupById(params.id,user);							
 		if (index  > -1){			
 			for (i = 0; i < ListOfUser[user].group[index].memberID.length; i++) {
 				var indexV = getVehiculeById(i,user);
 				if (indexV  > -1){
-					ListOfUser[user].vehicule[indexV].dest.lat = parseFloat(params['lat']);
-					ListOfUser[user].vehicule[indexV].dest.lng = parseFloat(params['lng']);	
+					ListOfUser[user].vehicule[indexV].dest.lat = parseFloat(params.lat);
+					ListOfUser[user].vehicule[indexV].dest.lng = parseFloat(params.lng);	
 				}
 			}							
 			return true;			
@@ -214,9 +214,9 @@ method.changeGroupDest = function(params) {
 method.addToGroup = function(params) {	
 	var user = getCurrentUserID();
 	
-	if ('gid' in params && 'vid' in params) {	
-		var indexG = getGroupById(params['gid'],user);
-		var indexV = getVehiculeById(params['vid'],user);
+	if (params.gid && params.vid) {	
+		var indexG = getGroupById(params.gid,user);
+		var indexV = getVehiculeById(params.vid,user);
 		if (indexG > -1 && indexV > -1){
 			ListOfUser[user].group[indexG].vehicule.push(vid);
 			return true				
@@ -230,9 +230,9 @@ method.addToGroup = function(params) {
 method.rmToGroup = function(params) {	
 	var user = getCurrentUserID();	
 	
-	if ('gid' in params && 'vid' in params) {	
-		var indexG = getGroupById(params['gid'],user);
-		var indexV = getVehiculeById(params['vid'],user);
+	if (params.gid && params.vid) {	
+		var indexG = getGroupById(params.gid,user);
+		var indexV = getVehiculeById(params.vid,user);
 		if (indexG > -1 && indexV > -1){
 			ListOfUser[user].group[indexG].vehicule.splice(indexV , 1);
 			return true;
@@ -247,8 +247,8 @@ method.rmToGroup = function(params) {
 method.deletGroup = function(params) {	
 	var user = getCurrentUserID();
 	
-	if ('id' in params) {	
-		var index = getGroupById(params['id'],user);	
+	if (params.id) {	
+		var index = getGroupById(params.id,user);	
 		if (index  > -1){
 			ListOfUser[user].group.splice(index , 1);	
 			return true;			

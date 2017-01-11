@@ -4,8 +4,9 @@
   "description": "",
   "main": "serveur.js",
   "dependencies": {
+    "chai": "*",
+    "express": "^4.14.0",
     "google-distance": "^1.0.1",
-	"chai": "*",
     "mocha": "*"
   },
   "devDependencies": {},
@@ -24,23 +25,21 @@
     "url": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes/issues"
   },
   "homepage": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes#readme",
-  
   "xo": {
-	 " esnext ": true ,
-	 " envs ": [
-		 " node "
-	 ],
-	 " space ": 2,
-	 " rules ": {
-		 "max -len": [
-			 " error ",
-			 80,
-			 2
-		 ]
-	 },
-	 " ignores ": [
-		"Gruntflie .js"
-	 ]
+    " esnext ": true,
+    " envs ": [
+      " node "
+    ],
+    " space ": 2,
+    " rules ": {
+      "max -len": [
+        " error ",
+        80,
+        2
+      ]
+    },
+    " ignores ": [
+      "Gruntflie .js"
+    ]
   }
-
 }
