@@ -1,8 +1,8 @@
 # Server autonomous vehicule
 ##Prerequisities
 
-- https://git-scm.com/
 - https://nodejs.org/en/
+- https://www.mongodb.com/fr
 
 ##Installation:
 go to the main floders and run for install dependecies
