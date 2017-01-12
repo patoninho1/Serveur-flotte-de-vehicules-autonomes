@@ -18,8 +18,8 @@ npm start
 Create the bob user : http://localhost:8080/setup
 
 ##Usage: 
-- list : get http://localhost:8080/api/:type(user|vehicule)
-- read : get http://localhost:8080/api/:type(user|vehicule)/:id
-- create : post http://localhost:8080/api/:type(user|vehicule)
-- update : patch http://localhost:8080/api/:type(user|vehicule)/:id
-- delete : delete http://localhost:8080/api/:type(user|vehicule)/:id
+- List : get http://localhost:8080/api/:type(user|vehicule)
+- Read : get http://localhost:8080/api/:type(user|vehicule)/:id
+- Create : post http://localhost:8080/api/:type(user|vehicule)
+- Update : patch http://localhost:8080/api/:type(user|vehicule)/:id
+- Delete : delete http://localhost:8080/api/:type(user|vehicule)/:id
