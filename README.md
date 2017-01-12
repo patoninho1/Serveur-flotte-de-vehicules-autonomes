@@ -4,26 +4,34 @@
 - https://git-scm.com/
 - https://nodejs.org/en/
 
-##Install instruction:
+##Installation:
+go to the main floders and run for install dependecies
+```
+npm install.
+```
 
-- go to the main floders.
-- npm install.
-- Start the server: node serveur.js
+##Start the server: 
+Start mongo
+```
+npm start
+```
+Create the bob user : http://localhost:8080/setup
 
-Possible call (CRUD and login):
-<br>(remplace localhost by the server ip)
+##Usage: 
 
-- Login: http://localhost:8080/login?user=YourUserName&pass=YourPassword This log you with the username and password pass in parameter
-- Create vehicle: http://localhost:8080/newVehicule This create a new vehicle (spawn near to the home point).
-- Create group: http://localhost:8080/newGroup This create a new group (Empty).
-- Read vehicle: http://localhost:8080/getVehiculeData This get a JSON with the data of all the vehicle.
-- Read group: http://localhost:8080/getGroupData This get a JSON with the data of all the group.
-- Update vehicle: http://localhost:8080/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
-- Update group: http://localhost:8080/changeGroupDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected group.
-- Update group: http://localhost:8080/addToGroup?gid=YourGroupId&vid=YourVehiculeID This add the vid vehicule to the gid group.
-- Update group: http://localhost:8080/rmToGroup?gid=YourGroupId&vid=YourVehiculeID This remove the vid vehicule to the gid group.
-- Delete vehicle: http://localhost:8080/deletVehicule?id=YourId This delete the selected vehicle. 
-- Delete group: http://localhost:8080/deletVehicule?id=YourId This delete the selected group. 
+- POST http://localhost:8080/api/login {usename: "bob", password: "mdpbob"} This return you the token for acces to the API function
+
+
+- Create vehicle: http://localhost:8080/api/newVehicule This create a new vehicle (spawn near to the home point).
+- Create group: http://localhost:8080/api/newGroup This create a new group (Empty).
+- Read vehicle: http://localhost:8080/api/getVehiculeData This get a JSON with the data of all the vehicle.
+- Read group: http://localhost:8080/api/getGroupData This get a JSON with the data of all the group.
+- Update vehicle: http://localhost:8080/api/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
+- Update group: http://localhost:8080/api/changeGroupDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected group.
+- Update group: http://localhost:8080/api/addToGroup?gid=YourGroupId&vid=YourVehiculeID This add the vid vehicule to the gid group.
+- Update group: http://localhost:8080/api/rmToGroup?gid=YourGroupId&vid=YourVehiculeID This remove the vid vehicule to the gid group.
+- Delete vehicle: http://localhost:8080/api/deletVehicule?id=YourId This delete the selected vehicle. 
+- Delete group: http://localhost:8080/api/deletVehicule?id=YourId This delete the selected group. 
 
 ##Testing client:
 

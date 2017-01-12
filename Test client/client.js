@@ -19,24 +19,29 @@ var lineSymbol = {
 
 var iconFlote = '';
 
-
-
+var token = '';
+	/*$.get( "http://localhost:8080/api", { token: data.token } , function( data2 ) {
+			console.log(data2);
+		});*/
+		
+		
+		
 function validate(){
  
 	var username = $("#username").val();
-	var pass = $("#password").val();
+	var pass = $("#password").val();	
 	
-	console.log(username + " " + pass);
-	
-	$.getJSON("http://localhost:8080/login?user=" + username + "&pass=" + pass, function(data) {
-		if (data.succes == true){
-			alert("You are now log as " + username);
+	$.post( "http://localhost:8080/api/login", {usename: username, password: pass} , function( data ) {		
+		if (data.succes){
+			token = data.token;
+			console.log(data.token); 
+			alert(data.message + username);
 			$('#login').hide();
 			//$('#main').show();
 		}else{		
-			alert(data.error);
+			alert(data.message);
 		}	
-	}); 
+	});
 	
 }
 
@@ -224,6 +229,18 @@ function initMap() {
 		icon: iconHome
 	});		
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

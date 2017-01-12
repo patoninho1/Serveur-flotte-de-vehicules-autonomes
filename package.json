@@ -1,18 +1,24 @@
 {
-  "name": "Serveur-flotte-de-vehisules-autonomes",
+  "name": "Serveur-flotte-de-vehicules-autonomes",
   "version": "1.0.0",
   "description": "",
-  "main": "serveur.js",
+  "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "chai": "*",
     "express": "^4.14.0",
     "google-distance": "^1.0.1",
-    "mocha": "*"
+    "jsonwebtoken": "^7.2.1",
+    "mocha": "*",
+    "mongoose": "^4.7.6",
+    "morgan": "^1.7.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "xo": "^0.17.1"
+  },
   "scripts": {
-    "start": "node serveur.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "xo"
   },
   "repository": {
     "type": "git",
@@ -24,22 +30,5 @@
   "bugs": {
     "url": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes/issues"
   },
-  "homepage": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes#readme",
-  "xo": {
-    " esnext ": true,
-    " envs ": [
-      " node "
-    ],
-    " space ": 2,
-    " rules ": {
-      "max -len": [
-        " error ",
-        80,
-        2
-      ]
-    },
-    " ignores ": [
-      "Gruntflie .js"
-    ]
-  }
+  "homepage": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes#readme"
 }
