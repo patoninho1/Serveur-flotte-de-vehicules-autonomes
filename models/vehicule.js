@@ -3,15 +3,17 @@ var mongoose   = require('mongoose')
   , ObjectId   = mongoose.Schema.Types.ObjectId;
 
 var schema = mongoose.Schema({
-    id: Number, 
-	loc: {
+	owner: String,
+	location: {
 		lat: Number, 
 		lng: Number
 	},
-	dest: {
+	destination: {
 		lat: Number, 
 		lng: Number
-	}
+	},
+	distance: Number,
+	busy: Boolean
 });
 
 module.exports = mongoose.model('Vehicule', schema);
