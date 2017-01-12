@@ -19,26 +19,17 @@ Create the bob user : http://localhost:8080/setup
 
 ##Usage: 
 
-- POST http://localhost:8080/api/login {usename: "bob", password: "mdpbob"} This return you the token for acces to the API function
-
-
-- Create vehicle: http://localhost:8080/api/newVehicule This create a new vehicle (spawn near to the home point).
-- Create group: http://localhost:8080/api/newGroup This create a new group (Empty).
-- Read vehicle: http://localhost:8080/api/getVehiculeData This get a JSON with the data of all the vehicle.
-- Read group: http://localhost:8080/api/getGroupData This get a JSON with the data of all the group.
-- Update vehicle: http://localhost:8080/api/changeVehiculeDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
-- Update group: http://localhost:8080/api/changeGroupDest?id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected group.
+- POST http://localhost:8080/api/login This return the token for acces to the API function.
+- Create vehicle: http://localhost:8080/api/newVehicule?token=yourtoken This create a new vehicle (spawn near to the home point).
+- Create group: http://localhost:8080/api/newGroup?token=yourtoken This create a new group (Empty).
+- Read vehicle: http://localhost:8080/api/getVehiculeData?token=yourtoken This get a JSON with the data of all the vehicle.
+- Read group: http://localhost:8080/api/getGroupData?token=yourtoken This get a JSON with the data of all the group.
+- Update vehicle: http://localhost:8080/api/changeVehiculeDest?token=yourtoken&id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected vehicle.
+- Update group: http://localhost:8080/api/changeGroupDest?token=yourtoken&id=YourId&lat=DestinationLat&lng=DestinationLng This set a new destination for the selected group.
 - Update group: http://localhost:8080/api/addToGroup?gid=YourGroupId&vid=YourVehiculeID This add the vid vehicule to the gid group.
 - Update group: http://localhost:8080/api/rmToGroup?gid=YourGroupId&vid=YourVehiculeID This remove the vid vehicule to the gid group.
 - Delete vehicle: http://localhost:8080/api/deletVehicule?id=YourId This delete the selected vehicle. 
 - Delete group: http://localhost:8080/api/deletVehicule?id=YourId This delete the selected group. 
-
-##Testing client:
-
-- Open index.html in the "Test client" floders (js have to be alowed by your webrowser).
-- Wait until google maps API is loaded.
-- Login using the test creditential (Login "bob" Password "mdpbob").
-- Now you can use the left pannel to create new vehicle, send them where you want, groupe them, or delete them.
 
 ##Rules:
 

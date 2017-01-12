@@ -5,9 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "chai": "*",
     "express": "^4.14.0",
-    "google-distance": "^1.0.1",
+    "json-api": "^2.15.7",
     "jsonwebtoken": "^7.2.1",
     "mocha": "*",
     "mongoose": "^4.7.6",
@@ -18,14 +17,17 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "xo"
+    "test": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "",
+    ""
+  ],
+  "author": "Samy Zobiri",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/patoninho1/Serveur-flotte-de-vehicules-autonomes/issues"
