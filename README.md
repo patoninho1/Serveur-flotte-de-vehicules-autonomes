@@ -1,4 +1,4 @@
-# Server autonomous vehicle
+# Server autonomous vehicule
 ##Prerequisities
 
 - https://git-scm.com/
@@ -7,11 +7,11 @@
 ##Installation:
 go to the main floders and run for install dependecies
 ```
-npm install.
+npm install
 ```
 
 ##Start the server: 
-Start mongo
+Before you have to start mongo
 ```
 npm start
 ```
