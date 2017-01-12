@@ -15,7 +15,6 @@ Before you have to start mongo
 ```
 npm start
 ```
-Create the bob user : http://localhost:8080/setup
 
 ##Usage: 
 - List : get http://localhost:8080/api/:type(user|vehicule)
