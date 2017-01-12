@@ -1,5 +1,5 @@
 # Server autonomous vehicule
-##Prerequisities
+##Prerequisites
 
 - https://nodejs.org/en/
 - https://www.mongodb.com/fr
