@@ -6,13 +6,14 @@ var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
 var jwt    		= require('jsonwebtoken'); 
-var port		= 8080;
-var dBadress 	= 'mongodb://localhost/vroum';
-var tokenPass	= 'secretpass';
 
 var user		= require('./models/user.js'); 
 var vehicule	= require('./models/vehicule.js'); 
 var group		= require('./models/group.js'); 
+
+var port		= 8080;
+var dBadress 	= 'mongodb://localhost/vroum';
+var tokenPass	= 'secretpass';
 
 
 //Connect to the mongo data base
