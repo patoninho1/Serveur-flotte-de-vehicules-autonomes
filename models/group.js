@@ -3,8 +3,8 @@ var mongoose   = require('mongoose')
   , ObjectId   = mongoose.Schema.Types.ObjectId;
 
 var schema = mongoose.Schema({
-    username: String, 
-    password: String
+	owner: String,
+	member: Array	
 });
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model('Group', schema);
