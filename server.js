@@ -1,17 +1,17 @@
 var express     = require('express');
 var app         = express();
 var apiRoutes   = express.Router(); 
-var API			= require('json-api');
+var API		= require('json-api');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
-var jwt    		= require('jsonwebtoken'); 
+var jwt    	= require('jsonwebtoken'); 
 
-var user		= require('./models/user.js'); 
+var user	= require('./models/user.js'); 
 var vehicule	= require('./models/vehicule.js'); 
-var group		= require('./models/group.js'); 
+var group	= require('./models/group.js'); 
 
-var port		= 8080;
+var port	= 8080;
 var dBadress 	= 'mongodb://localhost/vroum';
 var tokenPass	= 'secretpass';
 
@@ -32,7 +32,7 @@ var models = {
     Vehicule: vehicule,
 	Group: group
 };
- var adapter = new API.dbAdapters.Mongoose(models);
+var adapter = new API.dbAdapters.Mongoose(models);
 var registry = new API.ResourceTypeRegistry({
 	
 	user: {
@@ -47,7 +47,6 @@ var registry = new API.ResourceTypeRegistry({
   
 }, { dbAdapter: adapter }); 
  
- 
 
 var DocsController = new API.controllers.Documentation(registry, {name: 'vehicule API'}); 
 var APIController = new API.controllers.API(registry);
@@ -56,7 +55,7 @@ var requestHandler = Front.apiRequest.bind(Front);
 app.set('tokenSecret', tokenPass); 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 
 
 //At every request
@@ -72,8 +71,7 @@ app.use(function (req, res, next) {
 /*
 app.use('/', function(req, res) {
     res.send('The API is here: http://localhost:' + port + '/api');
-});
-*/
+});*/
 
 //Create the bob user http://localhost:8080/setup
 app.get('/setup', function(req, res) {
