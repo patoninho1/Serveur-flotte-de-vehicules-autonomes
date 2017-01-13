@@ -17,8 +17,8 @@ npm start
 ```
 
 ##Usage: 
-- List : get http://localhost:8080/api/:type(user|vehicule)
-- Read : get http://localhost:8080/api/:type(user|vehicule)/:id
-- Create : post http://localhost:8080/api/:type(user|vehicule)
-- Update : patch http://localhost:8080/api/:type(user|vehicule)/:id
-- Delete : delete http://localhost:8080/api/:type(user|vehicule)/:id
+- List : get http://localhost:8080/api/:type(user|vehicule|group)
+- Read : get http://localhost:8080/api/:type(user|vehicule|group)/:id
+- Create : post http://localhost:8080/api/:type(user|vehicule|group)
+- Update : patch http://localhost:8080/api/:type(user|vehicule|group)/:id
+- Delete : delete http://localhost:8080/api/:type(user|vehicule|group)/:id

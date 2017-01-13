@@ -24,14 +24,14 @@ mongoose.connect(dBadress, function(error, db) {
     console.log("Connecté à la base de données !");
 });
  
-//Load models
+ 
+//Load models and registry
 var models = {
     User: user,
     Vehicule: vehicule,
 	Group: group
 };
- 
-var adapter = new API.dbAdapters.Mongoose(models);
+ var adapter = new API.dbAdapters.Mongoose(models);
 var registry = new API.ResourceTypeRegistry({
 	
 	user: {
@@ -47,18 +47,18 @@ var registry = new API.ResourceTypeRegistry({
 }, { dbAdapter: adapter }); 
  
  
+
 var DocsController = new API.controllers.Documentation(registry, {name: 'vehicule API'}); 
 var APIController = new API.controllers.API(registry);
 var Front = new API.httpStrategies.Express(APIController, DocsController);
 var requestHandler = Front.apiRequest.bind(Front);
- 
 app.set('tokenSecret', tokenPass); 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 
-//For every request
+//At every request
 app.use(function (req, res, next) {	
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -94,6 +94,7 @@ app.get('/setup', function(req, res) {
 //API Routes
 app.use('/api', apiRoutes);
 
+
 //Connect, POST http://localhost:8080/api/login {usename: "bob", password: "mdpbob"}
 apiRoutes.post('/login', function(req, res) {
 	user.findOne({ username: req.body.username }, function(err, user) {		
@@ -112,6 +113,7 @@ apiRoutes.post('/login', function(req, res) {
 		}			
     });
 });
+
 
 //check the token for earch apiRoutes
 apiRoutes.use(function(req, res, next) {
@@ -136,12 +138,14 @@ apiRoutes.use(function(req, res, next) {
 	
 });
  
+
 // Add routes for basic list, read, create, update, delete operations 
 apiRoutes.get("/:type(user|vehicule|group)", requestHandler);
 apiRoutes.get("/:type(user|vehicule|group)/:id", requestHandler);
 apiRoutes.post("/:type(user|vehicule|group)", requestHandler);
 apiRoutes.patch("/:type(user|vehicule|group)/:id", requestHandler);
 apiRoutes.delete("/:type(user|vehicule|group)/:id", requestHandler);
+
 
 app.listen(port);
 
