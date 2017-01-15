@@ -1,19 +1,22 @@
 var express     = require('express');
 var app         = express();
-var apiRoutes   = express.Router(); 
+var routes      = express.Router(); 
+var jwt         = require('jsonwebtoken'); 
 var tokenPass   = 'secretpass';
 var user  = require('./models/user.js')
 
 app.set('tokenSecret', tokenPass); 
 
-
-app.use('/', function(req, res) {
-	res.send('The API is here: http://localhost:' + port + '/api');
+routes.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
 });
 
-//Create the bob user http://localhost:8080/setup
-app.get('/setup', function(req, res) {
-
+/*
+routes.get('/setup', function(req, res) {
 	var bob = new user({ 
 		username: 'bob', 
 		password: 'mdpbob',
@@ -24,11 +27,11 @@ app.get('/setup', function(req, res) {
 		console.log('User saved successfully');
 		res.json({ success: true });
 	});
-
 });
-/*
+*/
+
 //Connect, POST http://localhost:8080/api/login {usename: "bob", password: "mdpbob"}
-apiRoutes.post('/login', function(req, res) {
+routes.post('/api/login', function(req, res) {
 	user.findOne({ username: req.body.username }, function(err, user) {
 		console.log(req.body.username + " " +  req.body.password);
 		if (err){
@@ -38,16 +41,14 @@ apiRoutes.post('/login', function(req, res) {
 		}else if (user.password != req.body.password) {
 			res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 		}else if (user.password == req.body.password) {
-			var token = jwt.sign(user, app.get('tokenSecret'), {
-				 expiresIn : '1440m'
-			});
+			var token = jwt.sign(user, app.get('tokenSecret'), {expiresIn : '1440m'});
 			res.json({ success: true, message: 'You are now log as ' + user.username, token: token });
 		}
 	});
 });
 
 //check the token for earch apiRoutes
-apiRoutes.use(function(req, res, next) {
+routes.use('/api',function(req, res, next) {
 
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -63,10 +64,10 @@ apiRoutes.use(function(req, res, next) {
 				next();
 			}
 		});
-	} else {
+	}  else {
 		return res.status(403).send({ success: false, message: 'No token provided.' });    
 	}
 
 }); 
-*/
-module.exports = apiRoutes;
+
+module.exports = routes;

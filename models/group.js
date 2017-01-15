@@ -4,7 +4,7 @@ var mongoose   = require('mongoose')
 
 var schema = mongoose.Schema({
 	owner: String,
-	member: Array	
+	member: Array
 });
 
 module.exports = mongoose.model('Group', schema);

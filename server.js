@@ -1,13 +1,12 @@
 var express     = require('express');
 var app         = express();
-//var apiRoutes   = express.Router(); 
 var API         = require('json-api');
-var morgan      = require('morgan');
+//var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var bodyParser  = require('body-parser');
-var jwt         = require('jsonwebtoken'); 
-var apiRoutes   = require('./routes.js');
 
+var routes      = require('./routes.js');
+var apiRoutes   = express();
 var port        = 8080;
 var dBadress    = 'mongodb://localhost/vroum';
 
@@ -52,15 +51,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 //app.use(morgan('dev'));
 
-
 // Routes
-app.use(function (req, res, next) {	
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+app.use('/', routes);
 app.use('/api', apiRoutes);
 apiRoutes.get("/:type(user|vehicule|group)", requestHandler);
 apiRoutes.get("/:type(user|vehicule|group)/:id", requestHandler);
