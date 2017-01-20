@@ -3,7 +3,7 @@ var mongoose   = require('mongoose')
   , ObjectId   = mongoose.Schema.Types.ObjectId;
 
 var schema = mongoose.Schema({
-	owner: String,
+	owner: ObjectId,
 	location: {
 		lat: Number, 
 		lng: Number
